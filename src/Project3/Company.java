@@ -144,52 +144,64 @@ public class Company {
 
     /**
      * Prints the list of employees in its current order.
+     * @return the list of employees in its current order
      */
-    public void print() {
+    public String print() {
+        String output = "";
         if (numEmployee == 0) {
-            System.out.println("Employee database is empty.");
-            return;
+            output += ("Employee database is empty.");
+            return output;
         }
         System.out.println("--Printing earning statements for all employees--");
         for (int i = 0; i < emplist.length; i++) {
             if (emplist[i] != null) {
-                System.out.println(emplist[i]);
+                output += (emplist[i]);
+                output += "\n";
             }
         }
+        return output;
     } //print earning statements for all employees
 
     /**
      * Prints the list of employees sorted by their department, in alphabetical order.
+     * @return the list of employees sorted by their department, in alphabetical order
      */
-    public void printByDepartment() {
+    public String printByDepartment() {
+        String output = "";
         if (numEmployee == 0) {
-            System.out.println("Employee database is empty.");
-            return;
+            output += ("Employee database is empty.");
+            return output;
         }
         insertionSortByDepartment();
         System.out.println("--Printing earning statements by department--");
         for (int i = 0; i < emplist.length; i++) {
             if (emplist[i] != null) {
-                System.out.println(emplist[i]);
+                output += (emplist[i]);
+                output += "\n";
             }
         }
+        return output;
     } //print earning statements by department
 
     /**
      * Prints the list of employees sorted by their date hired, in ascending order.
+     * @return the list of employees sorted by their date hired, in ascending order
      */
-    public void printByDate() {
+    public String printByDate() {
+        String output = "";
         if (numEmployee == 0) {
-            System.out.println("Employee database is empty.");
-            return;
+            output += ("Employee database is empty.");
+            return output;
         }
         insertionSortByDate();
         System.out.println("--Printing earning statements by date hired--");
         for (int i = 0; i < emplist.length; i++) {
             if (emplist[i] != null) {
-                System.out.println(emplist[i]);
+                output += (emplist[i]);
+                output += "\n";
             }
         }
+        return output;
     } //print earning statements by date hired
 
     /**

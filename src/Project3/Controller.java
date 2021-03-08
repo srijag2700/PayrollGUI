@@ -8,6 +8,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
+import javafx.beans.binding.Bindings;
 
 public class Controller {
 
@@ -16,6 +17,9 @@ public class Controller {
 
     @FXML
     private RadioButton choiceCS, choiceECE, choiceIT, choiceManager, choiceDeptHead, choiceDirector, choiceFullTime, choicePartTime, choiceManagement;
+
+    @FXML
+    private ToggleGroup dept, employeeType, mgmtType;
 
     @FXML
     private TextField empName, annualSalary, hoursWorked, rate;
@@ -27,13 +31,27 @@ public class Controller {
     private TextArea messageArea;
 
     @FXML
+    private void initialize() {
+        hoursWorked.disableProperty().bind(Bindings.or(choiceFullTime.selectedProperty(), choiceManagement.selectedProperty()));
+        rate.disableProperty().bind(Bindings.or(choiceFullTime.selectedProperty(), choiceManagement.selectedProperty()));
+
+        choiceManager.disableProperty().bind(Bindings.or(choiceFullTime.selectedProperty(), choicePartTime.selectedProperty()));
+        choiceDeptHead.disableProperty().bind(Bindings.or(choiceFullTime.selectedProperty(), choicePartTime.selectedProperty()));
+        choiceDirector.disableProperty().bind(Bindings.or(choiceFullTime.selectedProperty(), choicePartTime.selectedProperty()));
+
+        annualSalary.disableProperty().bind(choicePartTime.selectedProperty());
+
+        Company comp = new Company();
+    }
+
+    @FXML
     void add(ActionEvent event) {
         try {
             String newEmpName = empName.getText();
             String newDeptName; // fix
             String newDateHired = dateHired.getValue().toString();
 
-            Profile newEmpProf = new Profile(newEmpName, newDeptName, newDateHired);
+            //Profile newEmpProf = new Profile(newEmpName, newDeptName, newDateHired);
 
 
         }

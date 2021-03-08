@@ -8,6 +8,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
+import javafx.beans.binding.Bindings;
 
 public class Controller {
 
@@ -16,6 +17,9 @@ public class Controller {
 
     @FXML
     private RadioButton choiceCS, choiceECE, choiceIT, choiceManager, choiceDeptHead, choiceDirector, choiceFullTime, choicePartTime, choiceManagement;
+
+    @FXML
+    private ToggleGroup dept, employeeType, mgmtType;
 
     @FXML
     private TextField empName, annualSalary, hoursWorked, rate;
@@ -28,20 +32,14 @@ public class Controller {
 
     @FXML
     private void initialize() {
-        ToggleGroup dept = new ToggleGroup();
-        choiceCS.setToggleGroup(dept);
-        choiceECE.setToggleGroup(dept);
-        choiceIT.setToggleGroup(dept);
+        hoursWorked.disableProperty().bind(Bindings.or(choiceFullTime.selectedProperty(), choiceManagement.selectedProperty()));
+        rate.disableProperty().bind(Bindings.or(choiceFullTime.selectedProperty(), choiceManagement.selectedProperty()));
 
-        ToggleGroup employeeType = new ToggleGroup();
-        choiceFullTime.setToggleGroup(employeeType);
-        choicePartTime.setToggleGroup(employeeType);
-        choiceManagement.setToggleGroup(employeeType);
+        choiceManager.disableProperty().bind(Bindings.or(choiceFullTime.selectedProperty(), choicePartTime.selectedProperty()));
+        choiceDeptHead.disableProperty().bind(Bindings.or(choiceFullTime.selectedProperty(), choicePartTime.selectedProperty()));
+        choiceDirector.disableProperty().bind(Bindings.or(choiceFullTime.selectedProperty(), choicePartTime.selectedProperty()));
 
-        ToggleGroup mgmtType = new ToggleGroup();
-        choiceManager.setToggleGroup(mgmtType);
-        choiceDeptHead.setToggleGroup(mgmtType);
-        choiceDirector.setToggleGroup(mgmtType);
+        annualSalary.disableProperty().bind(choicePartTime.selectedProperty());
 
         Company comp = new Company();
     }
@@ -53,7 +51,7 @@ public class Controller {
             String newDeptName; // fix
             String newDateHired = dateHired.getValue().toString();
 
-            Profile newEmpProf = new Profile(newEmpName, newDeptName, newDateHired);
+            //Profile newEmpProf = new Profile(newEmpName, newDeptName, newDateHired);
 
 
         }

@@ -42,6 +42,24 @@ public class Controller {
         choiceManager.setToggleGroup(mgmtType);
         choiceDeptHead.setToggleGroup(mgmtType);
         choiceDirector.setToggleGroup(mgmtType);
+
+        Company comp = new Company();
+    }
+
+    @FXML
+    void add(ActionEvent event) {
+        try {
+            String newEmpName = empName.getText();
+            String newDeptName; // fix
+            String newDateHired = dateHired.getValue().toString();
+
+            Profile newEmpProf = new Profile(newEmpName, newDeptName, newDateHired);
+
+
+        }
+        catch (Exception e){
+
+        }
     }
 
     @FXML

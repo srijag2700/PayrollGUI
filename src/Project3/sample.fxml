@@ -138,6 +138,41 @@
                      </children></AnchorPane>
             </content>
           </Tab>
+<<<<<<< HEAD:src/sample/sample.fxml
+          <Tab text="Employee Database">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="5.0" text="Select Command from the Menu " AnchorPane.leftAnchor="14.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Label>
+                        <MenuBar AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="30.0">
+                          <menus>
+                            <Menu mnemonicParsing="false" text="File">
+                              <items>
+                                <MenuItem mnemonicParsing="false" text="Import" />
+                                    <MenuItem mnemonicParsing="false" text="Export" />
+                              </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Print">
+                              <items>
+                                <MenuItem mnemonicParsing="false" text="Print" />
+                                    <MenuItem mnemonicParsing="false" text="Print by Date Hired" />
+                                    <MenuItem mnemonicParsing="false" text="Print by Department" />
+                              </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Payment">
+                              <items>
+                                <MenuItem mnemonicParsing="false" text="Calculate Payment" />
+                              </items>
+                            </Menu>
+                          </menus>
+                        </MenuBar>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+=======
             <Tab text="Employee Database">
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -171,10 +206,15 @@
                         </children></AnchorPane>
                 </content>
             </Tab>
+>>>>>>> 22ec4860571cd5f5edd7f267e45e9e357e57d5a1:src/Project3/sample.fxml
         </tabs>
       </TabPane>
    </top>
    <right>
+<<<<<<< HEAD:src/sample/sample.fxml
+      <TextArea prefHeight="315.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+=======
       <TextArea fx:id="messageArea" prefHeight="174.0" prefWidth="615.0" BorderPane.alignment="CENTER" />
+>>>>>>> 22ec4860571cd5f5edd7f267e45e9e357e57d5a1:src/Project3/sample.fxml
    </right>
 </BorderPane>

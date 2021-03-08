@@ -26,6 +26,7 @@ public class Controller {
     @FXML
     private TextArea messageArea;
 
+    /**
     @FXML
     private void initialize() {
         ToggleGroup dept = new ToggleGroup();
@@ -43,6 +44,7 @@ public class Controller {
         choiceDeptHead.setToggleGroup(mgmtType);
         choiceDirector.setToggleGroup(mgmtType);
     }
+     */
 
     @FXML
     void clear(ActionEvent event) {

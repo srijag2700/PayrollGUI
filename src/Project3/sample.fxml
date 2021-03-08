@@ -39,13 +39,16 @@
                                     <RadioButton fx:id="choiceCS" alignment="CENTER_LEFT" mnemonicParsing="false" text="CS">
                                        <padding>
                                           <Insets right="10.0" />
-                                       </padding></RadioButton>
-                                    <RadioButton fx:id="choiceECE" alignment="CENTER_LEFT" mnemonicParsing="false" text="ECE">
+                                       </padding>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="dept" />
+                                       </toggleGroup></RadioButton>
+                                    <RadioButton fx:id="choiceECE" alignment="CENTER_LEFT" mnemonicParsing="false" text="ECE" toggleGroup="$dept">
                                        <padding>
                                           <Insets right="10.0" />
                                        </padding>
                                     </RadioButton>
-                                    <RadioButton fx:id="choiceIT" mnemonicParsing="false" text="IT" />
+                                    <RadioButton fx:id="choiceIT" mnemonicParsing="false" text="IT" toggleGroup="$dept" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -54,13 +57,16 @@
                                        <padding>
                                           <Insets right="10.0" />
                                        </padding>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="employeeType" />
+                                       </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton fx:id="choicePartTime" mnemonicParsing="false" text="Part Time">
+                                    <RadioButton fx:id="choicePartTime" mnemonicParsing="false" text="Part Time" toggleGroup="$employeeType">
                                        <padding>
                                           <Insets right="10.0" />
                                        </padding>
                                     </RadioButton>
-                                    <RadioButton fx:id="choiceManagement" mnemonicParsing="false" text="Management" />
+                                    <RadioButton fx:id="choiceManagement" mnemonicParsing="false" text="Management" toggleGroup="$employeeType" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
@@ -97,13 +103,16 @@
                                        <padding>
                                           <Insets right="10.0" />
                                        </padding>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="mgmtType" />
+                                       </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton fx:id="choiceDeptHead" mnemonicParsing="false" text="Department Head">
+                                    <RadioButton fx:id="choiceDeptHead" mnemonicParsing="false" text="Department Head" toggleGroup="$mgmtType">
                                        <padding>
                                           <Insets right="10.0" />
                                        </padding>
                                     </RadioButton>
-                                    <RadioButton fx:id="choiceDirector" mnemonicParsing="false" text="Director" />
+                                    <RadioButton fx:id="choiceDirector" mnemonicParsing="false" text="Director" toggleGroup="$mgmtType" />
                                  </children>
                               </HBox>
                               <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="113.0" text="Clear" GridPane.rowIndex="7" />

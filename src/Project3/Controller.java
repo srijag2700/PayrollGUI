@@ -26,27 +26,6 @@ public class Controller {
     @FXML
     private TextArea messageArea;
 
-    /**
-    @FXML
-    private void initialize() {
-        ToggleGroup dept = new ToggleGroup();
-        choiceCS.setToggleGroup(dept);
-        choiceECE.setToggleGroup(dept);
-        choiceIT.setToggleGroup(dept);
-
-        ToggleGroup employeeType = new ToggleGroup();
-        choiceFullTime.setToggleGroup(employeeType);
-        choicePartTime.setToggleGroup(employeeType);
-        choiceManagement.setToggleGroup(employeeType);
-
-        ToggleGroup mgmtType = new ToggleGroup();
-        choiceManager.setToggleGroup(mgmtType);
-        choiceDeptHead.setToggleGroup(mgmtType);
-        choiceDirector.setToggleGroup(mgmtType);
-
-        Company comp = new Company();
-    }
-
     @FXML
     void add(ActionEvent event) {
         try {
@@ -62,7 +41,6 @@ public class Controller {
 
         }
     }
-     */
 
     @FXML
     void clear(ActionEvent event) {

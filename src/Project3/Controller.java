@@ -48,12 +48,70 @@ public class Controller {
     void add(ActionEvent event) {
         try {
             String newEmpName = empName.getText();
-            String newDeptName; // fix
+            RadioButton selectedDept = (RadioButton) dept.getSelectedToggle();
+            String newDeptName = selectedDept.getText();
             String newDateHired = dateHired.getValue().toString();
+            double payInfo = Double.parseDouble(rate);
+            boolean added = false;
 
-            //Profile newEmpProf = new Profile(newEmpName, newDeptName, newDateHired);
+            // catching errors
+            if (!dateHired.isValid()) {
+                messageArea.appendText(dateHired + " is not a valid date!" + "\n");
+                continue;
+            }
+            else if (!deptName.equals("CS") && !deptName.equals("ECE") && !deptName.equals("IT")) {
+                messageArea.appendText("'" + deptName + "' is not a valid department code.\n");
+                continue;
+            }
 
+            Profile newEmpProf = new Profile(newEmpName, newDeptName, newDateHired);
 
+            RadioButton selectedEmpType = (RadioButton) employeeType.getSelectedToggle();
+            String newEmpType = selectedEmpType.getText();
+            if (newEmpType.equals("choicePartTime")) {
+                if (payInfo < 0) {
+                    messageArea.appendText("Pay rate cannot be negative.\n");
+                    continue;
+                }
+                Parttime newPartTime = new Parttime(newEmpProf, payInfo);
+                added = comp.add(newPartTime);
+            }
+            else if (newEmpType.equals("choiceFullTime")) {
+                if (payInfo < 0) {
+                    messageArea.appendText("Pay rate cannot be negative.\n");
+                    continue;
+                }
+                Fulltime newFullTime = new Fulltime(newEmpProf, payInfo);
+                added = com.add(newFullTime);
+            }
+            else if (newEmpType.equals("choiceManagement")) {
+                RadioButton selectedMgmt = (RadioButton) mgmtType.getSelectedToggle();
+                String newMgmtStatus = selectedMgmt.getText();
+                int mgmtNumber;
+                if (selectedMgmt.equals("choiceManager")) {
+                    mgmtNumber = 1;
+                }
+                else if (selectedMgmt.equals("choiceDeptHead")) {
+                    mgmtNumber = 2;
+                }
+                else if (selectedMgmt.equals("choiceDirector")) {
+                    mgmtNumber = 3;
+                }
+                if (payInfo < 0) {
+                    messageArea.appendText("Salary cannot be negative.\n");
+                    continue;
+                }
+
+                Management newMgmt = new Management(newEmpProf, payInfo, mgmtNumber);
+                added = com.add(newMgmt);
+            }
+
+            if (added) {
+                messageArea.appendText("Employee added.\n");
+            }
+            else {
+                messageArea.appendText("Employee is already in the list.\n");
+            }
         }
         catch (Exception e){
 

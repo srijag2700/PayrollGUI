@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.beans.binding.Bindings;
+import java.time.format.DateTimeFormatter;
 
 public class Controller {
 
@@ -30,6 +31,8 @@ public class Controller {
     @FXML
     private TextArea messageArea;
 
+    Company comp = new Company();
+
     @FXML
     private void initialize() {
         hoursWorked.disableProperty().bind(Bindings.or(choiceFullTime.selectedProperty(), choiceManagement.selectedProperty()));
@@ -41,81 +44,139 @@ public class Controller {
 
         annualSalary.disableProperty().bind(choicePartTime.selectedProperty());
 
-        Company comp = new Company();
+        //Company comp = new Company();
     }
 
     @FXML
     void add(ActionEvent event) {
+        String newEmpName = empName.getText();
+        String newDeptName = "";
         try {
-            String newEmpName = empName.getText();
             RadioButton selectedDept = (RadioButton) dept.getSelectedToggle();
-            String newDeptName = selectedDept.getText();
-            String newDateHired = dateHired.getValue().toString();
-            double payInfo = Double.parseDouble(rate);
-            boolean added = false;
+            newDeptName = selectedDept.getText();
+        }
+        catch (NullPointerException e) {
+            messageArea.appendText("Please select a department.\n");
+            return;
+        }
 
-            // catching errors
-            if (!dateHired.isValid()) {
-                messageArea.appendText(dateHired + " is not a valid date!" + "\n");
-                continue;
-            }
-            else if (!deptName.equals("CS") && !deptName.equals("ECE") && !deptName.equals("IT")) {
-                messageArea.appendText("'" + deptName + "' is not a valid department code.\n");
-                continue;
-            }
+        DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        Date newDateHired = null;
+        try {
+            newDateHired = new Date(dateHired.getValue().format(formatDate));
+        }
+        catch (NullPointerException e) {
+            messageArea.appendText("Please enter a date." + "\n");
+            return;
+        }
+        boolean added = false;
 
-            Profile newEmpProf = new Profile(newEmpName, newDeptName, newDateHired);
+        if (!newDateHired.isValid()) {
+            messageArea.appendText(dateHired + " is not a valid date!" + "\n");
+            return;
+        }
 
+        Profile newEmpProf = new Profile(newEmpName, newDeptName, newDateHired);
+
+        String newEmpType = "";
+        try {
             RadioButton selectedEmpType = (RadioButton) employeeType.getSelectedToggle();
-            String newEmpType = selectedEmpType.getText();
-            if (newEmpType.equals("choicePartTime")) {
-                if (payInfo < 0) {
-                    messageArea.appendText("Pay rate cannot be negative.\n");
-                    continue;
-                }
-                Parttime newPartTime = new Parttime(newEmpProf, payInfo);
-                added = comp.add(newPartTime);
+            newEmpType = selectedEmpType.getText();
+        }
+        catch (NullPointerException e) {
+            messageArea.appendText("Please select an employment type.\n");
+            return;
+        }
+
+        if (newEmpType.equals("Part Time")) {
+            double hourlyPay = 0;
+            try {
+                hourlyPay = Double.parseDouble(rate.getText());
             }
-            else if (newEmpType.equals("choiceFullTime")) {
-                if (payInfo < 0) {
-                    messageArea.appendText("Pay rate cannot be negative.\n");
-                    continue;
-                }
-                Fulltime newFullTime = new Fulltime(newEmpProf, payInfo);
-                added = com.add(newFullTime);
+            catch (NumberFormatException e) {
+                messageArea.appendText("Please enter an hourly pay.\n");
+                return;
             }
-            else if (newEmpType.equals("choiceManagement")) {
+
+            if (hourlyPay < 0) {
+                messageArea.appendText("Pay rate cannot be negative.\n");
+                return;
+            }
+            Parttime newPartTime = new Parttime(newEmpProf, hourlyPay);
+            added = comp.add(newPartTime);
+        }
+
+        else if (newEmpType.equals("Full Time")) {
+            double salary = 0;
+            try {
+                salary = Double.parseDouble(annualSalary.getText());
+            }
+            catch (NumberFormatException e) {
+                messageArea.appendText("Please enter an annual salary.\n");
+                return;
+            }
+
+            if (salary < 0) {
+                messageArea.appendText("Pay rate cannot be negative.\n");
+                return;
+            }
+            Fulltime newFullTime = new Fulltime(newEmpProf, salary);
+            added = comp.add(newFullTime);
+        }
+
+        else if (newEmpType.equals("Management")) {
+            double salary = 0;
+            try {
+                salary = Double.parseDouble(annualSalary.getText());
+            }
+            catch (NumberFormatException e) {
+                messageArea.appendText("Please enter an annual salary.\n");
+                return;
+            }
+
+            String newMgmtStatus = "";
+            try {
                 RadioButton selectedMgmt = (RadioButton) mgmtType.getSelectedToggle();
-                String newMgmtStatus = selectedMgmt.getText();
-                int mgmtNumber;
-                if (selectedMgmt.equals("choiceManager")) {
-                    mgmtNumber = 1;
-                }
-                else if (selectedMgmt.equals("choiceDeptHead")) {
-                    mgmtNumber = 2;
-                }
-                else if (selectedMgmt.equals("choiceDirector")) {
-                    mgmtNumber = 3;
-                }
-                if (payInfo < 0) {
-                    messageArea.appendText("Salary cannot be negative.\n");
-                    continue;
-                }
-
-                Management newMgmt = new Management(newEmpProf, payInfo, mgmtNumber);
-                added = com.add(newMgmt);
+                newMgmtStatus = selectedMgmt.getText();
+            }
+            catch (NullPointerException e) {
+                messageArea.appendText("Please select a management type.\n");
+                return;
             }
 
-            if (added) {
-                messageArea.appendText("Employee added.\n");
+            int mgmtNumber = 0;
+            if (newMgmtStatus.equals("Manager")) {
+                mgmtNumber = 1;
             }
-            else {
-                messageArea.appendText("Employee is already in the list.\n");
+            else if (newMgmtStatus.equals("Department Head")) {
+                mgmtNumber = 2;
             }
+            else if (newMgmtStatus.equals("Director")) {
+                mgmtNumber = 3;
+            }
+            if (salary < 0) {
+                messageArea.appendText("Salary cannot be negative.\n");
+                return;
+            }
+
+            Management newMgmt = new Management(newEmpProf, salary, mgmtNumber);
+            added = comp.add(newMgmt);
         }
-        catch (Exception e){
 
+        if (added) {
+            messageArea.appendText("Employee added.\n");
+            return;
         }
+        else {
+            messageArea.appendText("Employee is already in the list.\n");
+            return;
+        }
+    }
+
+    @FXML
+    void print(ActionEvent event) {
+        messageArea.appendText(comp.print() + "\n");
+        return;
     }
 
     @FXML
@@ -125,6 +186,7 @@ public class Controller {
         hoursWorked.clear();
         rate.clear();
         dateHired.getEditor().clear();
+        dateHired.setValue(null);
         choiceCS.setSelected(false);
         choiceECE.setSelected(false);
         choiceIT.setSelected(false);

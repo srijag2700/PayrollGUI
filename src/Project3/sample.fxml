@@ -118,7 +118,7 @@
                               <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="113.0" text="Clear" GridPane.rowIndex="7" />
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                  <children>
-                                    <Button fx:id="addButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Add Employee">
+                                    <Button fx:id="addButton" mnemonicParsing="false" onAction="#add" prefHeight="25.0" prefWidth="111.0" text="Add Employee">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin></Button>
@@ -150,20 +150,20 @@
                           <menus>
                             <Menu mnemonicParsing="false" text="File">
                               <items>
-                                <MenuItem mnemonicParsing="false" text="Import" />
-                                    <MenuItem mnemonicParsing="false" text="Export" />
+                                <MenuItem fx:id="menuImport" mnemonicParsing="false" text="Import" />
+                                    <MenuItem fx:id="menuExport" mnemonicParsing="false" text="Export" />
                               </items>
                             </Menu>
                             <Menu mnemonicParsing="false" text="Print">
                               <items>
-                                <MenuItem mnemonicParsing="false" text="Print" />
-                                    <MenuItem mnemonicParsing="false" text="Print by Date Hired" />
-                                    <MenuItem mnemonicParsing="false" text="Print by Department" />
+                                <MenuItem fx:id="menuPrint" mnemonicParsing="false" onAction="#print" text="Print" />
+                                    <MenuItem fx:id="menuPrintDate" mnemonicParsing="false" text="Print by Date Hired" />
+                                    <MenuItem fx:id="menuPrintDept" mnemonicParsing="false" text="Print by Department" />
                               </items>
                             </Menu>
                             <Menu mnemonicParsing="false" text="Payment">
                               <items>
-                                <MenuItem mnemonicParsing="false" text="Calculate Payment" />
+                                <MenuItem fx:id="menuCalcPayment" mnemonicParsing="false" text="Calculate Payment" />
                               </items>
                             </Menu>
                           </menus>
@@ -175,6 +175,6 @@
       </TabPane>
    </top>
    <right>
-      <TextArea fx:id="messageArea" prefHeight="174.0" prefWidth="615.0" BorderPane.alignment="CENTER" />
+      <TextArea fx:id="messageArea" editable="false" prefHeight="174.0" prefWidth="615.0" BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>

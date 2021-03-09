@@ -174,6 +174,46 @@ public class Controller {
     }
 
     @FXML
+    void remove (ActionEvent event) {
+        if (comp.isEmpty()) {
+            messageArea.appendText("Employee database is empty.\n");
+            return;
+        }
+
+        String remEmpName = empName.getText();
+        String remDeptName = "";
+        try {
+            RadioButton selectedDept = (RadioButton) dept.getSelectedToggle();
+            remDeptName = selectedDept.getText();
+        }
+        catch (NullPointerException e) {
+            messageArea.appendText("Please select a department.\n");
+            return;
+        }
+
+        DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        Date remDateHired = null;
+        try {
+            remDateHired = new Date(dateHired.getValue().format(formatDate));
+        }
+        catch (NullPointerException e) {
+            messageArea.appendText("Please enter a date." + "\n");
+            return;
+        }
+
+        Profile tempProfile = new Profile(remEmpName, remDeptName, remDateHired);
+        Employee tempEmployee = new Employee(tempProfile);
+        if (comp.remove(tempEmployee)) {
+            messageArea.appendText("Employee removed.\n");
+            return;
+        }
+        else {
+            messageArea.appendText("Employee doesn't exist.\n");
+            return;
+        }
+    }
+
+    @FXML
     void calcPayments (ActionEvent event) {
         if (comp.isEmpty()) {
             messageArea.appendText("Employee database is empty.\n");

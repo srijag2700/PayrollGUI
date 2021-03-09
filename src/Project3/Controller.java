@@ -9,6 +9,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.beans.binding.Bindings;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 public class Controller {
@@ -296,6 +304,25 @@ public class Controller {
     }
 
     @FXML
+    void clear(ActionEvent event) {
+        empName.clear();
+        annualSalary.clear();
+        hoursWorked.clear();
+        rate.clear();
+        dateHired.getEditor().clear();
+        dateHired.setValue(null);
+        choiceCS.setSelected(false);
+        choiceECE.setSelected(false);
+        choiceIT.setSelected(false);
+        choiceDeptHead.setSelected(false);
+        choiceManager.setSelected(false);
+        choiceDirector.setSelected(false);
+        choiceFullTime.setSelected(false);
+        choicePartTime.setSelected(false);
+        choiceManagement.setSelected(false);
+    }
+
+    @FXML
     void calcPayments (ActionEvent event) {
         if (comp.isEmpty()) {
             messageArea.appendText("Employee database is empty.\n");
@@ -303,6 +330,68 @@ public class Controller {
         }
         comp.processPayments();
         messageArea.appendText("Calculation of employee payments is done.\n");
+        return;
+    }
+
+    @FXML
+    void importDatabase (ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Choose File to Import");
+        chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                new FileChooser.ExtensionFilter("All Files", "*.*"));
+        Stage stage = new Stage();
+        File sourceFile = chooser.showOpenDialog(stage); //get the reference of the source file
+
+        try {
+            FileReader fr = new FileReader(sourceFile);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] tokens = line.split(",");
+                String empType = tokens[0];
+                String empName = tokens[1];
+                String empDept = tokens[2];
+                String tempDateHired = tokens[3];
+                Date empDateHired = new Date(tempDateHired);
+
+                Profile empProfile = new Profile(empName, empDept, empDateHired);
+
+                if (empType.equals("P")) {
+                    double empHourlyRate = Double.parseDouble(tokens[4]);
+                    Parttime empPartTime = new Parttime(empProfile, empHourlyRate);
+                    comp.add(empPartTime);
+                }
+                else if (empType.equals("F")) {
+                    double empSalary = Double.parseDouble(tokens[4]);
+                    Fulltime empFullTime = new Fulltime(empProfile, empSalary);
+                    comp.add(empFullTime);
+                }
+                else if (empType.equals("M")) {
+                    double empMgmtSalary = Double.parseDouble(tokens[4]);
+                    int empMgmtCode = Integer.parseInt(tokens[5]);
+                    Management empMgmt = new Management(empProfile, empMgmtSalary, empMgmtCode);
+                    comp.add(empMgmt);
+                }
+            }
+
+            messageArea.appendText("Database imported.\n");
+            return;
+
+        } catch (IOException e) {
+            messageArea.appendText("Error while importing database.\n");
+            return;
+        }
+    }
+
+    @FXML
+    void export(ActionEvent event) throws IOException {
+        if (comp.isEmpty()) {
+            messageArea.appendText("Employee database is empty.\n");
+            return;
+        }
+        comp.exportDatabase();
+        messageArea.appendText("Database exported.\n");
         return;
     }
 
@@ -322,24 +411,5 @@ public class Controller {
     void printByDept(ActionEvent event) {
         messageArea.appendText(comp.printByDepartment() + "\n");
         return;
-    }
-
-    @FXML
-    void clear(ActionEvent event) {
-        empName.clear();
-        annualSalary.clear();
-        hoursWorked.clear();
-        rate.clear();
-        dateHired.getEditor().clear();
-        dateHired.setValue(null);
-        choiceCS.setSelected(false);
-        choiceECE.setSelected(false);
-        choiceIT.setSelected(false);
-        choiceDeptHead.setSelected(false);
-        choiceManager.setSelected(false);
-        choiceDirector.setSelected(false);
-        choiceFullTime.setSelected(false);
-        choicePartTime.setSelected(false);
-        choiceManagement.setSelected(false);
     }
 }

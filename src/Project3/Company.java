@@ -1,4 +1,9 @@
 package Project3;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * The Company class is used to store all of the current employees in array format.
@@ -203,6 +208,23 @@ public class Company {
         }
         return output;
     } //print earning statements by date hired
+
+    public void exportDatabase() throws IOException {
+
+        String database = print();
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Choose File to Export To");
+        chooser.setInitialFileName("database.txt");
+        chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                new FileChooser.ExtensionFilter("All Files", "*.*"));
+        Stage stage = new Stage();
+        File targetFile = chooser.showSaveDialog(stage);
+
+        FileWriter fw = new FileWriter(targetFile);
+        fw.write(database);
+        fw.close();
+    }
 
     /**
      * Checks if there are employees in the company.

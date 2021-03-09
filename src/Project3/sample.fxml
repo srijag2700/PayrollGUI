@@ -157,13 +157,13 @@
                             <Menu mnemonicParsing="false" text="Print">
                               <items>
                                 <MenuItem fx:id="menuPrint" mnemonicParsing="false" onAction="#print" text="Print" />
-                                    <MenuItem fx:id="menuPrintDate" mnemonicParsing="false" text="Print by Date Hired" />
-                                    <MenuItem fx:id="menuPrintDept" mnemonicParsing="false" text="Print by Department" />
+                                    <MenuItem fx:id="menuPrintDate" mnemonicParsing="false" onAction="#printByDate" text="Print by Date Hired" />
+                                    <MenuItem fx:id="menuPrintDept" mnemonicParsing="false" onAction="#printByDept" text="Print by Department" />
                               </items>
                             </Menu>
                             <Menu mnemonicParsing="false" text="Payment">
                               <items>
-                                <MenuItem fx:id="menuCalcPayment" mnemonicParsing="false" text="Calculate Payment" />
+                                <MenuItem fx:id="menuCalcPayment" mnemonicParsing="false" onAction="#calcPayments" text="Calculate Payment" />
                               </items>
                             </Menu>
                           </menus>

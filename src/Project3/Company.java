@@ -152,7 +152,7 @@ public class Company {
             output += ("Employee database is empty.");
             return output;
         }
-        System.out.println("--Printing earning statements for all employees--");
+        output += ("--Printing earning statements for all employees--\n");
         for (int i = 0; i < emplist.length; i++) {
             if (emplist[i] != null) {
                 output += (emplist[i]);
@@ -173,7 +173,7 @@ public class Company {
             return output;
         }
         insertionSortByDepartment();
-        System.out.println("--Printing earning statements by department--");
+        output += ("--Printing earning statements by department--\n");
         for (int i = 0; i < emplist.length; i++) {
             if (emplist[i] != null) {
                 output += (emplist[i]);
@@ -194,7 +194,7 @@ public class Company {
             return output;
         }
         insertionSortByDate();
-        System.out.println("--Printing earning statements by date hired--");
+        output += ("--Printing earning statements by date hired--\n");
         for (int i = 0; i < emplist.length; i++) {
             if (emplist[i] != null) {
                 output += (emplist[i]);

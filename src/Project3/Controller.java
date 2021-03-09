@@ -174,8 +174,31 @@ public class Controller {
     }
 
     @FXML
+    void calcPayments (ActionEvent event) {
+        if (comp.isEmpty()) {
+            messageArea.appendText("Employee database is empty.\n");
+            return;
+        }
+        comp.processPayments();
+        messageArea.appendText("Calculation of employee payments is done.\n");
+        return;
+    }
+
+    @FXML
     void print(ActionEvent event) {
         messageArea.appendText(comp.print() + "\n");
+        return;
+    }
+
+    @FXML
+    void printByDate(ActionEvent event) {
+        messageArea.appendText(comp.printByDate() + "\n");
+        return;
+    }
+
+    @FXML
+    void printByDept(ActionEvent event) {
+        messageArea.appendText(comp.printByDepartment() + "\n");
         return;
     }
 

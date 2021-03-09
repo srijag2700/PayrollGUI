@@ -122,11 +122,11 @@
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin></Button>
-                                    <Button fx:id="removeButton" mnemonicParsing="false" text="Remove Employee">
+                                    <Button fx:id="removeButton" mnemonicParsing="false" onAction="#remove" text="Remove Employee">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin></Button>
-                                    <Button fx:id="setHoursButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Set Hours">
+                                    <Button fx:id="setHoursButton" mnemonicParsing="false" onAction="#setHours" prefHeight="25.0" prefWidth="111.0" text="Set Hours">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>

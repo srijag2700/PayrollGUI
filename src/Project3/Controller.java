@@ -32,6 +32,7 @@ public class Controller {
     private TextArea messageArea;
 
     Company comp = new Company();
+    private static final int MAX_HOURS = 100;
 
     @FXML
     private void initialize() {
@@ -211,6 +212,87 @@ public class Controller {
             messageArea.appendText("Employee doesn't exist.\n");
             return;
         }
+    }
+
+    @FXML
+    void setHours(ActionEvent event) {
+        if (comp.isEmpty()) {
+            messageArea.appendText("Employee database is empty.\n");
+            return;
+        }
+
+        String tempEmpName = empName.getText();
+        String tempDeptName = "";
+        try {
+            RadioButton selectedDept = (RadioButton) dept.getSelectedToggle();
+            tempDeptName = selectedDept.getText();
+        }
+        catch (NullPointerException e) {
+            messageArea.appendText("Please select a department.\n");
+            return;
+        }
+
+        DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        Date tempDateHired = null;
+        try {
+            tempDateHired = new Date(dateHired.getValue().format(formatDate));
+        }
+        catch (NullPointerException e) {
+            messageArea.appendText("Please enter a date." + "\n");
+            return;
+        }
+
+        String newEmpType = "";
+        try {
+            RadioButton selectedEmpType = (RadioButton) employeeType.getSelectedToggle();
+            newEmpType = selectedEmpType.getText();
+        }
+        catch (NullPointerException e) {
+            messageArea.appendText("Please select an employment type.\n");
+            return;
+        }
+
+        if (!newEmpType.equals("Part Time")) {
+            messageArea.appendText("Hours can only be set for a part-time employee.\n");
+            return;
+        }
+
+        int hours = 0;
+        if (!hoursWorked.getText().equals("")) {
+            try {
+                hours = Integer.parseInt(hoursWorked.getText());
+            }
+            catch (NumberFormatException e) {
+                messageArea.appendText("Number of hours worked must be an integer.\n");
+                return;
+            }
+        }
+        else {
+            messageArea.appendText("Please enter the number of hours worked.\n");
+            return;
+        }
+
+        if (hours > MAX_HOURS) {
+            messageArea.appendText("Invalid hours: over 100\n");
+            return;
+        }
+        else if (hours < 0) {
+            messageArea.appendText("Working hours cannot be negative.\n");
+            return;
+        }
+        else {
+            Profile tempProfile = new Profile(tempEmpName, tempDeptName, tempDateHired);
+            Parttime tempPartTime = new Parttime(tempProfile, hours);
+            if (comp.setHours(tempPartTime)) {
+                messageArea.appendText("Working hours set.\n");
+                return;
+            }
+            else {
+                messageArea.appendText("Employee does not exist.\n");
+                return;
+            }
+        }
+
     }
 
     @FXML

@@ -209,6 +209,10 @@ public class Company {
         return output;
     } //print earning statements by date hired
 
+    /**
+     * Exports the current list of employees as a text file.
+     * @throws IOException if there is an error in file selection
+     */
     public void exportDatabase() throws IOException {
 
         String database = print();

@@ -22,9 +22,6 @@ import java.time.format.DateTimeFormatter;
 public class Controller {
 
     @FXML
-    private Button clearButton, addButton, removeButton, setHoursButton;
-
-    @FXML
     private RadioButton choiceCS, choiceECE, choiceIT, choiceManager, choiceDeptHead, choiceDirector, choiceFullTime, choicePartTime, choiceManagement;
 
     @FXML
@@ -42,6 +39,9 @@ public class Controller {
     Company comp = new Company();
     private static final int MAX_HOURS = 100;
 
+    /**
+     * Initializes the controller with the relationships between the selected employment type & its applicable text fields.
+     */
     @FXML
     private void initialize() {
         hoursWorked.disableProperty().bind(Bindings.or(choiceFullTime.selectedProperty(), choiceManagement.selectedProperty()));
@@ -52,10 +52,12 @@ public class Controller {
         choiceDirector.disableProperty().bind(Bindings.or(choiceFullTime.selectedProperty(), choicePartTime.selectedProperty()));
 
         annualSalary.disableProperty().bind(choicePartTime.selectedProperty());
-
-        //Company comp = new Company();
     }
 
+    /**
+     * Adds a new Employee to the database after checking that all fields are correctly filled in & valid.
+     * @param event the "Add Employee" button getting clicked
+     */
     @FXML
     void add(ActionEvent event) {
         String newEmpName = empName.getText();
@@ -182,6 +184,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Removes an Employee from the database after checking that all fields are correctly filled in and valid.
+     * @param event the "Remove Employee" button getting clicked
+     */
     @FXML
     void remove (ActionEvent event) {
         if (comp.isEmpty()) {
@@ -222,6 +228,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Sets hours for the specified part-time employee after checking that the appropriate fields are correctly filled in & valid.
+     * @param event the "Set Hours" button getting clicked
+     */
     @FXML
     void setHours(ActionEvent event) {
         if (comp.isEmpty()) {
@@ -303,6 +313,10 @@ public class Controller {
 
     }
 
+    /**
+     * Clears all fields & radio button selections.
+     * @param event the "Clear" button getting clicked
+     */
     @FXML
     void clear(ActionEvent event) {
         empName.clear();
@@ -322,6 +336,10 @@ public class Controller {
         choiceManagement.setSelected(false);
     }
 
+    /**
+     * Calculates payments for all employees in the company.
+     * @param event the "Calculate Payments" option under the "Payments" menu on the Menu Bar is selected
+     */
     @FXML
     void calcPayments (ActionEvent event) {
         if (comp.isEmpty()) {
@@ -333,6 +351,10 @@ public class Controller {
         return;
     }
 
+    /**
+     * Prompts the user to select a database (a formatted text file) to import.
+     * @param event the "Import" option under the "File" menu on the Menu Bar is selected
+     */
     @FXML
     void importDatabase (ActionEvent event) {
         FileChooser chooser = new FileChooser();
@@ -384,8 +406,12 @@ public class Controller {
         }
     }
 
+    /**
+     * Prompts the user to export the database to a formatted text file.
+     * @param event the "Export" option under the "File" menu on the Menu Bar is selected
+     */
     @FXML
-    void export(ActionEvent event) throws IOException {
+    void export(ActionEvent event) {
         if (comp.isEmpty()) {
             messageArea.appendText("Employee database is empty.\n");
             return;
@@ -401,18 +427,30 @@ public class Controller {
         return;
     }
 
+    /**
+     * Prints the database in its current form to the Text Area.
+     * @param event the "Print" option under the "Print" menu on the Menu Bar is selected
+     */
     @FXML
     void print(ActionEvent event) {
         messageArea.appendText(comp.print() + "\n");
         return;
     }
 
+    /**
+     * Prints the database in order of date hired to the Text Area.
+     * @param event the "Print by Date Hired" option under the "Print" menu on the Menu Bar is selected
+     */
     @FXML
     void printByDate(ActionEvent event) {
         messageArea.appendText(comp.printByDate() + "\n");
         return;
     }
 
+    /**
+     * Prints the database in alphabetical order of department to the Text Area.
+     * @param event the "Print by Department" option under the "Print" menu on the Menu Bar is selected
+     */
     @FXML
     void printByDept(ActionEvent event) {
         messageArea.appendText(comp.printByDepartment() + "\n");

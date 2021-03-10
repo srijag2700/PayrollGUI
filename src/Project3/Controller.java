@@ -378,7 +378,7 @@ public class Controller {
             messageArea.appendText("Database imported.\n");
             return;
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             messageArea.appendText("Error while importing database.\n");
             return;
         }
@@ -390,7 +390,13 @@ public class Controller {
             messageArea.appendText("Employee database is empty.\n");
             return;
         }
-        comp.exportDatabase();
+        try {
+            comp.exportDatabase();
+        }
+        catch (Exception e) {
+            messageArea.appendText("Error exporting database.\n");
+            return;
+        }
         messageArea.appendText("Database exported.\n");
         return;
     }

@@ -145,11 +145,6 @@ public class Controller {
                 return;
             }
 
-            if (salary < 0) {
-                messageArea.appendText("Pay rate cannot be negative.\n");
-                return;
-            }
-
             String newMgmtStatus = "";
             try {
                 RadioButton selectedMgmt = (RadioButton) mgmtType.getSelectedToggle();

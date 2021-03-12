@@ -126,7 +126,13 @@ public class Company {
             return false;
         }
         Parttime partTimeEmployee = (Parttime) employee;
-        Parttime tempPartTime = (Parttime) emplist[empIndex];
+        Parttime tempPartTime = null;
+        try {
+            tempPartTime = (Parttime) emplist[empIndex];
+        }
+        catch (Exception e){
+            throw new ClassCastException();
+        }
         tempPartTime.setHoursWorked(partTimeEmployee.getHoursWorked());
         emplist[empIndex] = tempPartTime;
         return true;

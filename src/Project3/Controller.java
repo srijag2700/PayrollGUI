@@ -19,6 +19,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The Controller class is used to control the Payroll Processor GUI and implement all the methods of Company.
+ * @author Srija Gottiparthi, Catherine Nguyen
+ */
+
 public class Controller {
 
     @FXML
@@ -40,7 +45,7 @@ public class Controller {
     private static final int MAX_HOURS = 100;
 
     /**
-     * Initializes the controller with the relationships between the selected employment type & its applicable text fields.
+     * Initializes the controller with the relationships between the selected employment type and its applicable text fields.
      */
     @FXML
     private void initialize() {
@@ -55,7 +60,7 @@ public class Controller {
     }
 
     /**
-     * Adds a new Employee to the database after checking that all fields are correctly filled in & valid.
+     * Adds a new Employee to the database after checking that all fields are correctly filled in and valid.
      * @param event the "Add Employee" button getting clicked
      */
     @FXML
@@ -229,7 +234,7 @@ public class Controller {
     }
 
     /**
-     * Sets hours for the specified part-time employee after checking that the appropriate fields are correctly filled in & valid.
+     * Sets hours for the specified part-time employee after checking that the appropriate fields are correctly filled in and valid.
      * @param event the "Set Hours" button getting clicked
      */
     @FXML
@@ -301,7 +306,17 @@ public class Controller {
         else {
             Profile tempProfile = new Profile(tempEmpName, tempDeptName, tempDateHired);
             Parttime tempPartTime = new Parttime(tempProfile, hours);
-            if (comp.setHours(tempPartTime)) {
+            boolean res;
+
+            try {
+                res = comp.setHours(tempPartTime);
+            }
+            catch (ClassCastException e) {
+                messageArea.appendText("Hours can only be set for part-time employees.\n");
+                return;
+            }
+
+            if (res) {
                 messageArea.appendText("Working hours set.\n");
                 return;
             }
@@ -314,7 +329,7 @@ public class Controller {
     }
 
     /**
-     * Clears all fields & radio button selections.
+     * Clears all fields and radio button selections.
      * @param event the "Clear" button getting clicked
      */
     @FXML
